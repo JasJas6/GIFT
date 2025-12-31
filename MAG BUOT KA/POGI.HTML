@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEW YEAR GIFT BB SAY 🌷</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:Georgia,serif;overflow-x:hidden}
+.hidden{display:none}
+
+/* BACKGROUND */
+.app-container{
+  min-height:100%;
+  background:linear-gradient(135deg,#ffc3f0,#b8d4ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:30px;
+  position:relative;
+}
+
+/* LOGOS */
+.bg-logo{
+  position:absolute;
+  top:20px;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:white;
+  padding:8px;
+  transition: .5s ease;
+}
+.bg-logo.left{left:20px}
+.bg-logo.right{right:20px}
+.bg-logo img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.hide-on-open.hidden-logo{
+  opacity:0;
+  transform:scale(0.7);
+  pointer-events:none;
+}
+
+/* LOGIN */
+.login-screen{
+  background:rgba(255,255,255,.95);
+  padding:50px;
+  border-radius:30px;
+  text-align:center;
+  max-width:400px;
+  width:100%;
+  z-index:2;
+}
+.login-input{
+  width:100%;padding:15px;font-size:18px;
+  border-radius:12px;border:2px solid #ffc3f0;margin:20px 0;
+}
+.login-button{
+  width:100%;padding:15px;font-size:18px;
+  border-radius:12px;border:none;
+  background:linear-gradient(135deg,#d946b5,#7c8fff);
+  color:white;cursor:pointer;
+}
+
+/* GIFT */
+.gift-screen{text-align:center;max-width:900px;width:100%;z-index:2}
+.envelope-container{width:300px;height:200px;margin:auto;cursor:pointer}
+.envelope-back{width:100%;height:100%;background:#ffc3f0;border-radius:10px}
+.envelope-flap{
+  width:0;height:0;
+  border-left:150px solid transparent;
+  border-right:150px solid transparent;
+  border-top:100px solid #d946b5;
+  margin-top:-200px;
+  transform-origin:top;
+  transition:.6s;
+}
+.envelope-flap.open{transform:rotateX(180deg)}
+
+/* GIFTS GRID */
+.gifts-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;margin-top:40px;
+  opacity:0;transform:translateY(20px);
+  transition:1s;
+}
+.gifts-grid.show{opacity:1;transform:translateY(0)}
+.gift-card{
+  background:white;padding:30px;border-radius:20px;
+  cursor:pointer;transition:.3s;
+}
+.gift-card:hover{transform:scale(1.05)}
+
+/* DETAIL SCREENS + TRANSITION */
+.detail-screen{
+  max-width:900px;width:100%;
+  opacity:0;
+  transform:translateX(40px) scale(.96);
+  transition:.5s ease;
+  pointer-events:none;
+  z-index:2;
+}
+.detail-screen.show{
+  opacity:1;
+  transform:translateX(0) scale(1);
+  pointer-events:auto;
+}
+.detail-content{
+  background:white;padding:40px;border-radius:20px;text-align:center;
+}
+
+/* PHOTO GALLERY */
+.photo-gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:20px;
+  opacity:0;transform:translateY(20px);
+  transition:1s ease .4s;
+}
+.photo-gallery.show{opacity:1;transform:translateY(0)}
+.photo-gallery img{
+  width:100%;border-radius:15px;
+  transition:.4s;
+}
+.photo-gallery img:hover{
+  transform:scale(1.08);
+  box-shadow:0 10px 25px rgba(217,70,181,.3);
+}
+
+/* BACK BUTTON */
+.back-button{
+  margin-top:25px;padding:15px 40px;
+  border-radius:12px;border:none;
+  background:linear-gradient(135deg,#d946b5,#7c8fff);
+  color:white;cursor:pointer;
+}
+
+/* FAVORITES */
+.favorites-list{display:flex;flex-direction:column;gap:15px;max-width:600px;margin:auto}
+.favorites-item{display:flex;align-items:center;gap:15px}
+.favorites-item img{width:100px;height:150px;border-radius:10px;object-fit:cover}
+.favorites-list a{color:#d946b5;font-weight:bold;text-decoration:none}
+
+/* FLOAT EFFECT */
+#floatContainer{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+.float{
+  position:absolute;
+  opacity:0;
+  animation:floatUp linear forwards;
+}
+@keyframes floatUp{
+  from{transform:translateY(100vh) scale(.8);opacity:0}
+  10%{opacity:1}
+  to{transform:translateY(-80px) rotate(360deg) scale(1.2);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" src="Taylor Swift - Enchanted.mp3" loop></audio>
+
+<div class="app-container">
+
+<div class="bg-logo left hide-on-open"><img src="logo1.jpg"></div>
+<div class="bg-logo right hide-on-open"><img src="logo2.jpg"></div>
+
+<div id="loginScreen" class="login-screen">
+<h1 style="color:#d946b5">NEW YEAR GIFT 🌷</h1>
+<form id="loginForm">
+<input id="nameInput" class="login-input" required placeholder="Your name">
+<button class="login-button">Open Gift 💙</button>
+</form>
+</div>
+
+<div id="giftScreen" class="gift-screen hidden">
+<h2 id="helloName" style="color:#d946b5"></h2>
+
+<div id="envelopeContainer" class="envelope-container">
+<div class="envelope-back"></div>
+<div id="envelopeFlap" class="envelope-flap"></div>
+<p style="color:#d946b5">Click to open 💌</p>
+</div>
+
+<div id="giftsContent" class="hidden">
+<div class="gifts-grid" id="giftsGrid">
+<div class="gift-card" onclick="showScreen(picturesScreen)">🌷<h3>Pictures</h3></div>
+<div class="gift-card" onclick="showScreen(memoriesScreen)">📸<h3>Memories</h3></div>
+<div class="gift-card" onclick="showScreen(letterScreen)">💌<h3>Letter</h3></div>
+<div class="gift-card" onclick="showScreen(musicScreen)">🎵<h3>Music</h3></div>
+<div class="gift-card" onclick="showScreen(kdramaScreen)">📺<h3>K-Drama</h3></div>
+<div class="gift-card" onclick="showScreen(wattpadScreen)">📖<h3>Wattpad</h3></div>
+</div>
+</div>
+</div>
+
+<!-- PICTURES -->
+<div id="picturesScreen" class="detail-screen hidden">
+<div class="detail-content">
+<div class="photo-gallery">
+<img src="1.jpg"><img src="2.jpg"><img src="3.jpg"><img src="7.jpeg">
+<img src="4.jpg"><img src="12.jpg"><img src="17.jpg"><img src="14.jpg">
+<img src="14.jpg"><img src="16.jpg"><img src="6.jpg"><img src="15.jpg">
+<img src="13.jpg"><img src="9.jpg"><img src="10.jpg"><img src="11.jpg">
+</div>
+<button class="back-button" onclick="back()">← Back</button>
+</div>
+</div>
+
+<!-- MEMORIES -->
+<div id="memoriesScreen" class="detail-screen hidden">
+<div class="detail-content">
+<div class="photo-gallery">
+<img src="memo1.jpg"><img src="memo2.jpg"><img src="memo3.jpg">
+<img src="memo4.jpg"><img src="memo5.jpeg"><img src="memo1.jpg"><img src="memo2.jpg"><img src="memo3.jpg">
+</div>
+<button class="back-button" onclick="back()">← Back</button>
+</div>
+</div>
+
+<!-- LETTER -->
+<div id="letterScreen" class="detail-screen hidden">
+<div class="detail-content">
+<p id="typingText" style="font-size:22px;font-style:italic;color:#d946b5"></p>
+<p style="margin-top:20px;font-weight:bold">Forever yours ❤️</p>
+<button class="back-button" onclick="back()">← Back</button>
+</div>
+</div>
+
+<!-- MUSIC -->
+<div id="musicScreen" class="detail-screen hidden">
+<div class="detail-content">
+<audio controls src="Taylor Swift - Enchanted.mp3"></audio>
+<button class="back-button" onclick="back()">← Back</button>
+</div>
+</div>
+
+<!-- KDRAMA -->
+<div id="kdramaScreen" class="detail-screen hidden">
+<div class="detail-content">
+<h3>Favorite K-Dramas 📺</h3>
+<div class="favorites-list">
+<div class="favorites-item"><img src="images.jpg"><a href="#">Twinkling watermelon</a></div>
+<div class="favorites-item"><img src="images (1).jpg"><a href="#">Bon appétit, your majesty </a></div>
+<div class="favorites-item"><img src="images (2).jpg"><a href="#">When life gives you tangerines </a></div>
+</div>
+<button class="back-button" onclick="back()">← Back</button>
+</div>
+</div>
+
+<!-- WATTPAD -->
+<div id="wattpadScreen" class="detail-screen hidden">
+<div class="detail-content">
+<h3>Favorite Wattpad 📖</h3>
+<div class="favorites-list">
+<div class="favorites-item"><img src="inksteady.256.138351.jpg"><a href="#"> <h3>Author: Inksteady </h3> <br> Could have been but never was , Dosage of serotonin, loving the sky , Timing in the waves</a></div>
+
+<button class="back-button" onclick="back()">← Back</button>
+</div>
+</div>
+
+</div>
+
+<div id="floatContainer"></div>
+
+<script>
+loginForm.onsubmit=e=>{
+  e.preventDefault();
+  loginScreen.classList.add("hidden");
+  giftScreen.classList.remove("hidden");
+  helloName.textContent="Hi bb "+nameInput.value+" 💙";
+  bgMusic.play();
+};
+
+envelopeContainer.onclick=()=>{
+  envelopeFlap.classList.add("open");
+
+  // Hide logos
+  document.querySelectorAll(".hide-on-open")
+    .forEach(l=>l.classList.add("hidden-logo"));
+
+  setTimeout(()=>{
+    envelopeContainer.classList.add("hidden");
+    giftsContent.classList.remove("hidden");
+    setTimeout(()=>giftsGrid.classList.add("show"),100);
+  },600);
+};
+
+function showScreen(screen){
+  document.querySelectorAll(".detail-screen").forEach(s=>{
+    s.classList.remove("show");
+    s.classList.add("hidden");
+  });
+  giftScreen.classList.add("hidden");
+  screen.classList.remove("hidden");
+  setTimeout(()=>screen.classList.add("show"),50);
+
+  const gallery=screen.querySelector(".photo-gallery");
+  if(gallery){
+    gallery.classList.remove("show");
+    setTimeout(()=>gallery.classList.add("show"),500);
+  }
+  if(screen.id==="letterScreen") typeText();
+}
+
+function back(){
+  document.querySelectorAll(".detail-screen").forEach(s=>{
+    s.classList.remove("show");
+    setTimeout(()=>s.classList.add("hidden"),300);
+  });
+  giftScreen.classList.remove("hidden");
+}
+
+const text="Happy New Year po, bb say ag. I just want to sincerely thank you for coming into my life and being part of my journey. You truly make me smile and laugh, even on my hardest days. Thank you for your understanding, your patience, and for always being there for me. Thank you for being my gbf, for caring about me, and for making me feel valued and appreciated. I really appreciate you so much, more than words can express, and you will always have a very special place in my heart no matter what happens. Ilabyahh a lot and I’m so grateful to have you in my life, ay ka oa bahh lintek ay bahala nana sa ubos ang ka oa. \n \n \nDiria sa ubos akoang ka-oahan ay, bitaw super thankful jud ko for you coming into my life, even if super unexpected kaayo to tanan, tungod ra jud atong  “say pwede  mag papil sa newspaper bato hayst” dina kaayo padugayon oy ayy, pero mao na jud diay to ang start sa tanan tbh. And alam mo naman talaga, we really have the same personalities, same vibes, same humor, dibdiba. You understand me so well without me even explaining  and you always know how to make me laugh and feel okayyy, I’m really grateful for you, for your presence, your care, og imohang ka clingy ayy sorry, and for being my GBF. I never expected someone like you to come into my life, but I’m honestly so thankful that you did, and you truly mean so much to me. Haysttttt JAN 1 naniiii Happy new year labyaahh A LOT  ay. HAPPY NEW YEAR MWEWHH 2026 NA START WITH U THE BEST HAYSTTTTT labyahhh ma gbf ay";
+let i=0;
+typingText.style.whiteSpace = "pre-wrap";
+function typeText(){
+  typingText.textContent="";
+  i=0;
+  const t=setInterval(()=>{
+    typingText.textContent+=text[i++];
+    if(i>=text.length) clearInterval(t);
+  },25);
+}
+
+setInterval(()=>{
+  const f=document.createElement("div");
+  f.className="float";
+  f.textContent=Math.random()>.5?"🌷":"💙";
+  f.style.left=Math.random()*100+"vw";
+  f.style.fontSize=20+Math.random()*30+"px";
+  f.style.animationDuration=4+Math.random()*4+"s";
+  floatContainer.appendChild(f);
+  setTimeout(()=>f.remove(),9000);
+},300);
+</script>
+
+</body>
+</html>
